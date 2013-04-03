@@ -1,4 +1,4 @@
-GLFW.jl
-=======
+GL.jl
+=====
 
-GLFW bindings for Julia
+Experimental OpenGL bindings for Julia.
