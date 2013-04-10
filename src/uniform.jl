@@ -3,7 +3,7 @@ function Uniform(prog::Program, name::String)
 		(Program, Ptr{GLchar}), prog, bytestring(name))
 	if ret < 0
 		GetError()
-		error("uniform not found")
+		error("uniform ", name, " not found")
 	else
 		return Uniform(ret)
 	end

@@ -88,3 +88,7 @@ const TEXTURE29 = 0x84DD
 const TEXTURE30 = 0x84DE
 const TEXTURE31 = 0x84DF
 
+function GenerateMipmap(target::Integer)
+	ccall( (:glGenerateMipmap, lib), Void, (GLenum,), target)
+end
+
