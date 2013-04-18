@@ -6,9 +6,10 @@ end
 
 GenTexture() = GenTextures(1)[1]
 
-function BindTexture(target::Integer, texture::Integer)
+function BindTexture(target::Integer, texture::Texture)
 	ccall( (:glBindTexture, lib), Void, (GLenum, Texture), target, texture)
 end
+BindTexture(target::Integer, tex::Integer) = BindTexture(target, Texture(tex))
 
 # BindTexture targets
 const TEXTURE_1D         = 0x0DE0

@@ -18,10 +18,18 @@ typealias GLfloat    Float32
 typealias GLdouble   Float64
 typealias GLvoid     Void
 
-typealias Object      GLuint
+immutable Object
+	handle::GLuint
+end
+Object(x) = Object(convert(GLuint,x))
+
+immutable Shader
+	handle::Object
+end
+Shader(x) = Shader(Object(x))
+
 typealias Buffer      Object
 typealias Program     Object
-typealias Shader      Object
 typealias Texture     Object
 typealias VertexArray Object
 

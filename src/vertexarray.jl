@@ -9,8 +9,8 @@ function GenVertexArray()
 	return GenVertexArrays(1)[1]
 end
 
-function BindVertexArray(va::Integer)
+function BindVertexArray(va::VertexArray)
 	ccall( (:glBindVertexArray, lib), Void, (VertexArray,), va)
 	GetError() # TODO: Benchmark overhead
 end
-
+BindVertexArray(va::Integer) = BindVertexArray(VertexArray(va))

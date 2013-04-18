@@ -23,10 +23,11 @@ const TEXTURE_BUFFER            = 0x8C2A
 const TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
 const UNIFORM_BUFFER            = 0x8A11
 
-function BindBuffer(target::Integer, buf::Integer)
+function BindBuffer(target::Integer, buf::Buffer)
 	ccall( (:glBindBuffer, lib), Void, (GLenum, Buffer), target, buf)
 	GetError() # TODO: Benchmark overhead
 end
+BindBuffer(target::Integer, buf::Integer) = BindBuffer(target, Buffer(buf))
 
 # Buffer usage
 const STREAM_DRAW  = 0x88E0

@@ -1,8 +1,8 @@
 const FRAGMENT_SHADER = 0x8B30
 const VERTEX_SHADER   = 0x8B31
 
-function CreateShader(type_::Integer)
-	ret = ccall( (:glCreateShader, lib), Shader, (GLenum,), type_)
+function CreateShader(typ::Integer)
+	ret = ccall( (:glCreateShader, lib), Shader, (GLenum,), typ)
 	if ret == 0
 		GetError()
 		error("shader creation failed")
@@ -12,7 +12,7 @@ end
 
 function ShaderSource(s::Shader, src::String)
 	ccall( (:glShaderSource, lib), Void,
-		(GLuint, GLsizei, Ptr{Ptr{GLchar}}, Ptr{GLint}),
+		(Shader, GLsizei, Ptr{Ptr{GLchar}}, Ptr{GLint}),
 		s, 1, [bytestring(src)], [length(src)])
 end
 
