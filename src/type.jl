@@ -41,8 +41,8 @@ typealias Attribute GLint
 
 immutable Uniform
 	location::GLint
-	Uniform(location) = new(convert(GLint, location))
 end
+Uniform(location) = Uniform(convert(GLint, location))
 +(u::Uniform, i::Integer) = Uniform(u.location+i)
 
 typealias Vec2 Vector2{Float32}
