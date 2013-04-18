@@ -28,8 +28,12 @@ immutable Shader
 end
 Shader(x) = Shader(Object(x))
 
+immutable Program
+	handle::Object
+end
+Program(x) = Program(Object(x))
+
 typealias Buffer      Object
-typealias Program     Object
 typealias Texture     Object
 typealias VertexArray Object
 

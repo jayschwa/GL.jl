@@ -1,7 +1,14 @@
-const FRAGMENT_SHADER = 0x8B30
-const VERTEX_SHADER   = 0x8B31
+const FRAGMENT_SHADER = 0x00008B30
+const VERTEX_SHADER   = 0x00008B31
 
-function CreateShader(typ::Integer)
+function Shader(typ::Integer, src::String)
+	s = Shader(typ)
+	ShaderSource(s, src)
+	CompileShader(s)
+	return s
+end
+
+function Shader(typ::Integer)
 	ret = ccall( (:glCreateShader, lib), Shader, (GLenum,), typ)
 	if ret == 0
 		GetError()

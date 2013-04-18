@@ -1,4 +1,13 @@
-function CreateProgram()
+function Program{S<:String}(shaders::Dict{GLenum,S})
+	prog = Program()
+	for (typ, src) = shaders
+		AttachShader(prog, Shader(typ, src))
+	end
+	LinkProgram(prog)
+	return prog
+end
+
+function Program()
 	ret = ccall( (:glCreateProgram, lib), Program, ())
 	if ret == 0
 		GetError()
