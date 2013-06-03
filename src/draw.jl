@@ -7,6 +7,12 @@ const TRIANGLE_STRIP = 0x0005
 const TRIANGLE_FAN   = 0x0006
 const QUADS          = 0x0007
 
+function DrawElements(mode::Integer, count::Integer, type_::Integer, ibo::Integer)
+	ccall( (:glDrawElements, lib), Void,
+		(GLenum, GLsizei, GLenum, Ptr{GLvoid}),
+		mode, count, type_, ibo)
+end
+
 function DrawElements(mode::Integer, count::Integer, type_::Integer, indices::Ptr)
 	ccall( (:glDrawElements, lib), Void,
 		(GLenum, GLsizei, GLenum, Ptr{GLvoid}),
