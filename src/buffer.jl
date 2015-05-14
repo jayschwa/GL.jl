@@ -48,5 +48,5 @@ function BufferData(target::Integer, size::Integer, data::Ptr, usage::Integer)
 end
 
 BufferData{T}(target::Integer, data::Array{T}, usage::Integer) =
-	BufferData(target, length(data) * sizeof(T), convert(Ptr{T}, data), usage)
+	BufferData(target, length(data) * sizeof(T), pointer(data), usage)
 

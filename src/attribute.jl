@@ -13,12 +13,12 @@ function EnableVertexAttribArray(attr::Attribute)
 	ccall( (:glEnableVertexAttribArray, lib), Void, (Attribute,), attr)
 end
 
-function VertexAttribPointer(attr::Attribute, size::Integer, type_::Integer,
+function VertexAttribPointer(attr::Attribute, size::Integer, typ::Integer,
 	normalize::Bool, stride::Integer, ptr::Integer)
 
 	ccall( (:glVertexAttribPointer, lib), Void,
 		(Attribute, GLint, GLenum, GLboolean, GLsizei, Ptr{GLvoid}),
-		attr, size, type_, normalize, stride, ptr)
+		attr, size, typ, normalize, stride, Ptr{GLvoid}(ptr))
 	GetError()
 end
 

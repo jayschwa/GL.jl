@@ -7,18 +7,18 @@ const TRIANGLE_STRIP = 0x0005
 const TRIANGLE_FAN   = 0x0006
 const QUADS          = 0x0007
 
-function DrawElements(mode::Integer, count::Integer, type_::Integer, ibo::Integer)
+function DrawElements(mode::Integer, count::Integer, typ::Integer, ibo::Integer)
 	ccall( (:glDrawElements, lib), Void,
 		(GLenum, GLsizei, GLenum, Ptr{GLvoid}),
-		mode, count, type_, ibo)
+		mode, count, typ, Ptr{GLvoid}(ibo))
 end
 
-function DrawElements(mode::Integer, count::Integer, type_::Integer, indices::Ptr)
+function DrawElements(mode::Integer, count::Integer, typ::Integer, indices::Ptr)
 	ccall( (:glDrawElements, lib), Void,
 		(GLenum, GLsizei, GLenum, Ptr{GLvoid}),
-		mode, count, type_, indices)
+		mode, count, typ, indices)
 end
 
 DrawElements{T}(mode::Integer, indices::Array{T}) =
-	DrawElements(mode, length(indices), GLtype[T], convert(Ptr{T}, indices))
+	DrawElements(mode, length(indices), GLtype[T], pointer(indices))
 

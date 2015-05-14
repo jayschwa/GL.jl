@@ -1,6 +1,6 @@
 module GL
 
-const lib = "libGL"
+const lib = Libdl.find_library(["libGL"], ["/System/Library/Frameworks/OpenGL.framework/Libraries/"])
 
 ################################################################################
 #   Types
@@ -26,7 +26,7 @@ const UNSIGNED_INT   = 0x1405
 const FLOAT          = 0x1406
 const DOUBLE         = 0x140A
 
-const GLtype = [
+const GLtype = Dict(
 	Int8    => BYTE,
 	Uint8   => UNSIGNED_BYTE,
 	Int16   => SHORT,
@@ -35,7 +35,7 @@ const GLtype = [
 	Uint32  => UNSIGNED_INT,
 	Float32 => FLOAT,
 	Float64 => DOUBLE
-]
+)
 
 ################################################################################
 #   Includes

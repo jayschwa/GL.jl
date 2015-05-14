@@ -19,8 +19,8 @@ end
 
 function ShaderSource(s::Shader, src::String)
 	ccall( (:glShaderSource, lib), Void,
-		(Shader, GLsizei, Ptr{Ptr{GLchar}}, Ptr{GLint}),
-		s, 1, [bytestring(src)], [length(src)])
+		(Shader, GLsizei, Ref{Ptr{GLchar}}, Ref{GLint}),
+		s, 1, pointer(bytestring(src)), GLint(length(src)))
 end
 
 function CompileShader(s::Shader)
@@ -40,7 +40,7 @@ function GetShader(s::Shader, param::Integer)
 	if ret == -1
 		GetError()
 		error("no output")
-	elseif contains((COMPILE_STATUS, DELETE_STATUS), param)
+	elseif param in (COMPILE_STATUS, DELETE_STATUS)
 		return ret == 1
 	else
 		return ret

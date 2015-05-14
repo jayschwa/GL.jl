@@ -43,7 +43,7 @@ function GetProgram(p::Program, param::Integer)
 	if ret == -1
 		GetError()
 		error("no output")
-	elseif contains((LINK_STATUS, DELETE_STATUS), param)
+	elseif param in (LINK_STATUS, DELETE_STATUS)
 		return ret == 1
 	else
 		return ret
