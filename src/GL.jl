@@ -28,11 +28,11 @@ const DOUBLE         = 0x140A
 
 const GLtype = Dict(
 	Int8    => BYTE,
-	Uint8   => UNSIGNED_BYTE,
+	UInt8   => UNSIGNED_BYTE,
 	Int16   => SHORT,
-	Uint16  => UNSIGNED_SHORT,
+	UInt16  => UNSIGNED_SHORT,
 	Int32   => INT,
-	Uint32  => UNSIGNED_INT,
+	UInt32  => UNSIGNED_INT,
 	Float32 => FLOAT,
 	Float64 => DOUBLE
 )

@@ -1,17 +1,17 @@
 importall ImmutableArrays
 
-typealias GLboolean  Bool
+typealias GLboolean  Int32
 typealias GLbyte     Int8
-typealias GLubyte    Uint8
-typealias GLchar     Uint8
+typealias GLubyte    UInt8
+typealias GLchar     UInt8
 typealias GLshort    Int16
-typealias GLushort   Uint16
+typealias GLushort   UInt16
 typealias GLint      Int32
-typealias GLuint     Uint32
+typealias GLuint     UInt32
 typealias GLint64    Int64
-typealias GLuint64   Uint64
-typealias GLsizei    Uint32
-typealias GLenum     Uint32
+typealias GLuint64   UInt64
+typealias GLsizei    UInt32
+typealias GLenum     UInt32
 typealias GLintptr   Ptr
 typealias GLsizeiptr Int
 typealias GLfloat    Float32

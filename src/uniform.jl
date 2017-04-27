@@ -12,7 +12,7 @@ end
 import Base.write
 importall ImmutableArrays
 
-for (T,t) in ((Float32, "f"), (Int32, "i"), (Uint32, "ui"))
+for (T,t) in ((Float32, "f"), (Int32, "i"), (UInt32, "ui"))
 	@eval begin
 		# Write single vector
 		write(u::Uniform, val::$T) =
@@ -68,5 +68,5 @@ for (T,t) in ((Float32, "f"), (Int32, "i"), (Uint32, "ui"))
 	end
 end
 
-write(u::Uniform, val::Bool) = write(u, convert(Uint32, val))
+write(u::Uniform, val::Bool) = write(u, convert(UInt32, val))
 
