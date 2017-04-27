@@ -1,6 +1,6 @@
 module GL
 
-const lib = Libdl.find_library(["libGL"], ["/System/Library/Frameworks/OpenGL.framework/Libraries/"])
+const lib = Libdl.find_library(["libGL", "OpenGL32"], ["/System/Library/Frameworks/OpenGL.framework/Libraries/"])
 
 ################################################################################
 #   Types
