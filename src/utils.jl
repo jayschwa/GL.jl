@@ -8,7 +8,7 @@ const STENCIL_BUFFER_BIT = 0x00000400
 const COLOR_BUFFER_BIT   = 0x00004000
 
 function Clear(mask::Integer)
-	ccall( (:glClear, lib), Void, (GLuint,), mask)
+	@glcall( (:glClear, lib), Void, (GLuint,), mask)
 end
 
 # Capabilities
@@ -23,11 +23,11 @@ const SCISSOR_TEST             = 0x0C11
 const STENCIL_TEST             = 0x0B90
 
 function Disable(cap::Integer)
-	ccall( (:glDisable, lib), Void, (GLenum,), cap)
+	@glcall( (:glDisable, lib), Void, (GLenum,), cap)
 end
 
 function Enable(cap::Integer)
-	ccall( (:glEnable, lib), Void, (GLenum,), cap)
+	@glcall( (:glEnable, lib), Void, (GLenum,), cap)
 end
 
 # Error codes
@@ -38,20 +38,28 @@ const INVALID_OPERATION = 0x0502
 const OUT_OF_MEMORY     = 0x0505
 
 function GetError()
-	ret = ccall( (:glGetError, lib), GLenum, ())
+	ret = @glcall( (:glGetError, lib), GLenum, ())
 	if ret != NO_ERROR
 		error(ret)
 	end
 end
 
 function GetString(name::Integer)
-	ret = ccall( (:glGetString, lib), Ptr{GLubyte}, (GLenum,), name)
-	bytestring(ret)
+	ret = @glcall( (:glGetString, lib), Ptr{GLubyte}, (GLenum,), name)
+	if ret != C_NULL
+		unsafe_string(ret)
+	else
+		GetError()
+	end
 end
 
 function GetStringi(name::Integer, index::Integer)
-	ret = ccall( (:glGetStringi, lib), Ptr{GLubyte}, (GLenum, GLuint), name, index)
-	bytestring(ret)
+	ret = @glcall( (:glGetStringi, lib), Ptr{GLubyte}, (GLenum, GLuint), name, index)
+	if ret != C_NULL
+		unsafe_string(ret)
+	else
+		GetError()
+	end
 end
 
 GetString(name::Integer, index::Integer) = GetStringi(name, index)
@@ -64,7 +72,7 @@ const SHADING_LANGUAGE_VERSION = 0x8B8C
 const EXTENSIONS               = 0x1F03
 
 function Viewport(width::Integer, height::Integer)
-	ccall( (:glViewport, lib), Void,
+	@glcall( (:glViewport, lib), Void,
 		(GLint, GLint, GLsizei, GLsizei),
 		0, 0, width, height)
 end

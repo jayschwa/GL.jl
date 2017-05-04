@@ -1,6 +1,6 @@
 function GenBuffers(count::Integer)
 	a = Array(Buffer, count)
-	ccall( (:glGenBuffers, lib), Void, (GLsizei, Ptr{Buffer}), count, a)
+	@glcall( (:glGenBuffers, lib), Void, (GLsizei, Ptr{Buffer}), count, a)
 	return a
 end
 
@@ -24,7 +24,7 @@ const TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
 const UNIFORM_BUFFER            = 0x8A11
 
 function BindBuffer(target::Integer, buf::Buffer)
-	ccall( (:glBindBuffer, lib), Void, (GLenum, Buffer), target, buf)
+	@glcall( (:glBindBuffer, lib), Void, (GLenum, Buffer), target, buf)
 	GetError() # TODO: Benchmark overhead
 end
 BindBuffer(target::Integer, buf::Integer) = BindBuffer(target, Buffer(buf))
@@ -41,7 +41,7 @@ const DYNAMIC_READ = 0x88E9
 const DYNAMIC_COPY = 0x88EA
 
 function BufferData(target::Integer, size::Integer, data::Ptr, usage::Integer)
-	ccall( (:glBufferData, lib), Void,
+	@glcall( (:glBufferData, lib), Void,
 		(GLenum, GLsizeiptr, Ptr{GLvoid}, GLenum),
 		target, size, data, usage)
 	GetError()

@@ -1,5 +1,7 @@
 module GL
 
+import GLFW
+
 const lib = Libdl.find_library(["libGL", "OpenGL32"], ["/System/Library/Frameworks/OpenGL.framework/Libraries/"])
 
 ################################################################################
@@ -36,6 +38,19 @@ const GLtype = Dict(
 	Float32 => FLOAT,
 	Float64 => DOUBLE
 )
+
+macro glcall(func_lib, args...)
+	func = lstrip(string(func_lib.args[1]), ':')
+	func_ptr = Symbol("$(func)FuncPtr")
+	eval(:(global $func_ptr = C_NULL))
+	ex = quote
+		if $func_ptr == C_NULL
+			global $func_ptr = GLFW.GetProcAddress($func)
+		end
+		ccall($func_ptr, $(args...))
+	end
+	return ex
+end
 
 ################################################################################
 #   Includes

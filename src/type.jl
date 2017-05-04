@@ -21,17 +21,14 @@ typealias GLvoid     Void
 immutable Object
 	handle::GLuint
 end
-Object(x) = Object(convert(GLuint,x))
 
 immutable Shader
 	handle::Object
 end
-Shader(x) = Shader(Object(x))
 
 immutable Program
 	handle::Object
 end
-Program(x) = Program(Object(x))
 
 typealias Buffer      Object
 typealias Texture     Object
@@ -42,7 +39,6 @@ typealias Attribute GLint
 immutable Uniform
 	location::GLint
 end
-Uniform(location) = Uniform(convert(GLint, location))
 +(u::Uniform, i::Integer) = Uniform(u.location+i)
 
 typealias Vec2 Vector2{Float32}

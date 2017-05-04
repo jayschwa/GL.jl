@@ -1,6 +1,6 @@
 function GenVertexArrays(count::Integer)
 	a = Array(VertexArray, count)
-	ccall( (:glGenVertexArrays, lib), Void, (GLsizei, Ptr{Buffer}), count, a)
+	@glcall( (:glGenVertexArrays, lib), Void, (GLsizei, Ptr{Buffer}), count, a)
 	GetError()
 	return a
 end
@@ -10,7 +10,7 @@ function GenVertexArray()
 end
 
 function BindVertexArray(va::VertexArray)
-	ccall( (:glBindVertexArray, lib), Void, (VertexArray,), va)
+	@glcall( (:glBindVertexArray, lib), Void, (VertexArray,), va)
 	GetError() # TODO: Benchmark overhead
 end
 BindVertexArray(va::Integer) = BindVertexArray(VertexArray(va))

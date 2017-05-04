@@ -1,13 +1,13 @@
 function GenTextures(num::Integer)
 	textures = Array(Texture, num)
-	ccall( (:glGenTextures, lib), Void, (GLsizei, Ptr{Texture}), num, textures)
+	@glcall( (:glGenTextures, lib), Void, (GLsizei, Ptr{Texture}), num, textures)
 	return textures
 end
 
 GenTexture() = GenTextures(1)[1]
 
 function BindTexture(target::Integer, texture::Texture)
-	ccall( (:glBindTexture, lib), Void, (GLenum, Texture), target, texture)
+	@glcall( (:glBindTexture, lib), Void, (GLenum, Texture), target, texture)
 end
 BindTexture(target::Integer, tex::Integer) = BindTexture(target, Texture(tex))
 
@@ -19,7 +19,7 @@ const TEXTURE_3D         = 0x806F
 function TexImage2D{T}(target::Integer, intformat::Integer, width::Integer,
 	height::Integer, format::Integer, data::Array{T})
 
-	ccall( (:glTexImage2D, lib), Void,
+	@glcall( (:glTexImage2D, lib), Void,
 		(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, Ptr{GLvoid}),
 		target, 0, intformat, width, height, 0, format, GLtype[T], data)
 	GetError()
@@ -31,7 +31,7 @@ const RGBA = 0x1908
 const RGB8 = 0x8051
 
 function TexParameteri(target::Integer, param::Integer, value::Integer)
-	ccall( (:glTexParameteri, lib), Void, (GLenum, GLenum, GLint),
+	@glcall( (:glTexParameteri, lib), Void, (GLenum, GLenum, GLint),
 		target, param, value)
 end
 
@@ -53,7 +53,7 @@ const REPEAT                 = 0x2901
 const CLAMP_TO_EDGE          = 0x812F
 
 function ActiveTexture(texture::Integer)
-	ccall( (:glActiveTexture, lib), Void, (GLenum,), texture)
+	@glcall( (:glActiveTexture, lib), Void, (GLenum,), texture)
 end
 
 const TEXTURE0  = 0x84C0
@@ -90,6 +90,6 @@ const TEXTURE30 = 0x84DE
 const TEXTURE31 = 0x84DF
 
 function GenerateMipmap(target::Integer)
-	ccall( (:glGenerateMipmap, lib), Void, (GLenum,), target)
+	@glcall( (:glGenerateMipmap, lib), Void, (GLenum,), target)
 end
 

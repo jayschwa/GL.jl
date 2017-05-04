@@ -1,6 +1,9 @@
 const FRAGMENT_SHADER = 0x00008B30
 const VERTEX_SHADER   = 0x00008B31
 
+FragmentShader(src::String) = Shader(FRAGMENT_SHADER, src)
+VertexShader(src::String) = Shader(VERTEX_SHADER, src)
+
 function Shader(typ::Integer, src::String)
 	s = Shader(typ)
 	ShaderSource(s, src)
@@ -9,7 +12,7 @@ function Shader(typ::Integer, src::String)
 end
 
 function Shader(typ::Integer)
-	ret = ccall( (:glCreateShader, lib), Shader, (GLenum,), typ)
+	ret = @glcall( (:glCreateShader, lib), Shader, (GLenum,), typ)
 	if ret == 0
 		GetError()
 		error("shader creation failed")
@@ -18,13 +21,13 @@ function Shader(typ::Integer)
 end
 
 function ShaderSource(s::Shader, src::String)
-	ccall( (:glShaderSource, lib), Void,
+	@glcall( (:glShaderSource, lib), Void,
 		(Shader, GLsizei, Ref{Ptr{GLchar}}, Ref{GLint}),
-		s, 1, pointer(bytestring(src)), GLint(length(src)))
+		s, 1, pointer(src), GLint(length(src)))
 end
 
 function CompileShader(s::Shader)
-	ccall( (:glCompileShader, lib), Void, (Shader,), s)
+	@glcall( (:glCompileShader, lib), Void, (Shader,), s)
 	if !GetShader(s, COMPILE_STATUS)
 		error(GetShaderInfoLog(s))
 	end
@@ -34,7 +37,7 @@ const COMPILE_STATUS = 0x8B81
 
 function GetShader(s::Shader, param::Integer)
 	ret = GLint[-1]
-	ccall( (:glGetShaderiv, lib), Void,
+	@glcall( (:glGetShaderiv, lib), Void,
 		(Shader, GLenum, Ptr{GLint}), s, param, ret)
 	ret = ret[1]
 	if ret == -1
@@ -50,9 +53,8 @@ end
 function GetShaderInfoLog(s::Shader)
 	size = GetShader(s, INFO_LOG_LENGTH)
 	buf = Array(GLchar, size)
-	ccall( (:glGetShaderInfoLog, lib), Void,
+	@glcall( (:glGetShaderInfoLog, lib), Void,
 		(Shader, GLsizei, Ptr{GLsizei}, Ptr{GLchar}),
 		s, size, &size, buf)
-	return bytestring(buf)
+	return unsafe_string(buf, size)
 end
-
